@@ -1,4 +1,4 @@
-CREATE TABLE auto_post
+CREATE TABLE IF NOT EXISTS auto_post
 (
     id SERIAL PRIMARY KEY,
     description VARCHAR NOT NULL,
