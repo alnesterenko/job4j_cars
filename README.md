@@ -15,7 +15,7 @@ Sql2o 1.6.0,<br/>
 PostgreSQL 16,<br/>
 Junit 5.<br/>
 
-Hibernate ?!!<br/>
+Hibernate 5.6.11.Final<br/>
 
 
 **Описание**
