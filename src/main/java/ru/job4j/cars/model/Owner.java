@@ -7,20 +7,24 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "auto_user")
+@Table(name = "owner")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
-public class User {
+public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String login;
-    private String password;
 
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
+    private String name;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "USER_ID_FK"))
+    private User user;
+
+    public Owner(String name, User user) {
+        this.name = name;
+        this.user = user;
     }
 }

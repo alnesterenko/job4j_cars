@@ -1,16 +1,20 @@
 package ru.job4j.cars.repository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import net.jcip.annotations.ThreadSafe;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@ThreadSafe
+@Repository
+@RequiredArgsConstructor
 public class UserRepository {
     private final SessionFactory sf;
 
@@ -136,6 +140,14 @@ public class UserRepository {
                     "FROM User AS u WHERE u.login = :login", User.class);
             query.setParameter("login", login);
             return Optional.ofNullable(query.uniqueResult());
+        }
+    }
+
+    /* Добавлено для удобства тестирования */
+    public void clearRepository() {
+        var users = findAllOrderById();
+        for (var oneUser : users) {
+            delete(oneUser.getId());
         }
     }
 }

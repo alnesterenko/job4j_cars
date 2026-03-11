@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -24,11 +25,15 @@ public class Post {
     private Integer id;
 
     private String description;
-    private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    private LocalDateTime created = LocalDateTime.now(ZoneId.of("UTC")).truncatedTo(ChronoUnit.SECONDS);
 
     @ManyToOne
     @JoinColumn(name = "auto_user_id")
     private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
+    private Car car;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
