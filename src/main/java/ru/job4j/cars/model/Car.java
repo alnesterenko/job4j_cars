@@ -19,6 +19,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /* Если это не марка машины, то что это? Имя собственное? "Чертопхайка", "Колымага", "Чёртов пылесос" ? ))) */
+    /* Пока оставляю так. Если в дальнейшем что-то прояснится, то заменю на model, добавлю связь manyToOne, добавлю отделную таблицу и репозиторий */
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

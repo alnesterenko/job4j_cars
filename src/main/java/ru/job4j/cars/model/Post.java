@@ -10,11 +10,13 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "id")
+@EqualsAndHashCode(exclude = {"id", "prices", "photos", "participates"})
 @Entity
 @Table(name = "auto_post")
 public class Post {
@@ -35,9 +37,13 @@ public class Post {
     @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
     private Car car;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<PriceHistory> prices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    /*@JoinColumn(name = "post_id")*/
+    private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -45,16 +51,59 @@ public class Post {
             joinColumns = { @JoinColumn(name = "post_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    private List<User> participates = new ArrayList<>();
+    private Set<User> participates = new HashSet<>();
 
     @Override
     public String toString() {
         return "Post{"
                 + "id=" + id
-                + ", description='" + description + '\''
+                + ", description=" + description
                 + ", created=" + created.format(FORMATTER)
                 + ", user=" + user
                 + ", prices=" + prices
+                + ", photos=" + photos
+                + ", participates=" + participates
                 + '}';
     }
+
+    public Post(String description, User user, Car car) {
+        this.description = description;
+        this.user = user;
+        this.car = car;
+    }
+
+    public Post(String description, User user, Car car, List<PriceHistory> prices) {
+        this.description = description;
+        this.user = user;
+        this.car = car;
+        this.prices = prices;
+    }
+
+    public Post(String description, User user, Car car, List<PriceHistory> prices, Set<Photo> photos) {
+        this.description = description;
+        this.user = user;
+        this.car = car;
+        this.prices = prices;
+        this.photos = photos;
+    }
+
+    public Post(String description, User user, Car car, List<PriceHistory> prices, Set<Photo> photos, Set<User> participates) {
+        this.description = description;
+        this.user = user;
+        this.car = car;
+        this.prices = prices;
+        this.photos = photos;
+        this.participates = participates;
+    }
+
+    public Post(String description, User user, Car car, Set<Photo> photos) {
+        this.description = description;
+        this.user = user;
+        this.car = car;
+        this.photos = photos != null ? new HashSet<>(photos) : new HashSet<>();
+        for (Photo photo : this.photos) {
+            photo.setPost(this);
+        }
+    }
+
 }

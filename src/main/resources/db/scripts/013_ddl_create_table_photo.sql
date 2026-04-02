@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS photo
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    post_id INT NOT NULL REFERENCES auto_post(id) ON DELETE CASCADE
+);
