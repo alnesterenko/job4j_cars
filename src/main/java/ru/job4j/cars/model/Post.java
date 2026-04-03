@@ -42,7 +42,6 @@ public class Post {
     private List<PriceHistory> prices = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    /*@JoinColumn(name = "post_id")*/
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany

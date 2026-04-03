@@ -21,21 +21,20 @@ public class HbnPostRepository implements PostRepository {
 
     private final CrudRepository crudRepository;
 
+    private final static String BODY_OF_HQL_QUERY =
+            "SELECT DISTINCT p "
+                    + "FROM Post p "
+                    + "LEFT JOIN FETCH p.user pu "
+                    + "LEFT JOIN FETCH p.car c "
+                    + "LEFT JOIN FETCH c.engine e "
+                    + "LEFT JOIN FETCH c.owner o "
+                    + "LEFT JOIN FETCH o.user u "
+                    + "LEFT JOIN FETCH p.photos pphotos ";
+
     @Override
     public List<Post> findAll() {
         return crudRepository.query(
-                "SELECT DISTINCT p "
-                        + "FROM Post p "
-                        + "LEFT JOIN FETCH p.user pu "
-                        + "LEFT JOIN FETCH p.car c "
-                        + "LEFT JOIN FETCH c.engine e "
-                        + "LEFT JOIN FETCH c.owner o "
-                        + "LEFT JOIN FETCH o.user u "
-                        + "LEFT JOIN FETCH c.owners ho "
-                        + "LEFT JOIN FETCH ho.user hu "
-                        + "LEFT JOIN FETCH p.prices pprices "
-                        + "LEFT JOIN FETCH p.photos pphotos "
-                        + "LEFT JOIN FETCH p.participates pparticipates "
+                BODY_OF_HQL_QUERY
                         + "ORDER BY p.id ASC", Post.class);
     }
 
@@ -44,18 +43,7 @@ public class HbnPostRepository implements PostRepository {
         Optional<Post> resultOptional = Optional.empty();
         if (id != null) {
             resultOptional = crudRepository.optional(
-                    "SELECT DISTINCT p "
-                            + "FROM Post p "
-                            + "LEFT JOIN FETCH p.user pu "
-                            + "LEFT JOIN FETCH p.car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "LEFT JOIN FETCH p.prices pprices "
-                            + "LEFT JOIN FETCH p.photos pphotos "
-                            + "LEFT JOIN FETCH p.participates pparticipates "
+                    BODY_OF_HQL_QUERY
                             + "WHERE p.id = :id",
                     Post.class,
                     Map.of("id", id));
@@ -68,18 +56,7 @@ public class HbnPostRepository implements PostRepository {
         List<Post> resultList = new ArrayList<>();
         if (description != null &&  !description.trim().isEmpty()) {
             resultList = crudRepository.query(
-                    "SELECT DISTINCT p "
-                            + "FROM Post p "
-                            + "LEFT JOIN FETCH p.user pu "
-                            + "LEFT JOIN FETCH p.car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "LEFT JOIN FETCH p.prices pprices "
-                            + "LEFT JOIN FETCH p.photos pphotos "
-                            + "LEFT JOIN FETCH p.participates pparticipates "
+                    BODY_OF_HQL_QUERY
                             + "WHERE p.description LIKE :description",
                     Post.class,
                     Map.of("description", description));
@@ -100,18 +77,7 @@ public class HbnPostRepository implements PostRepository {
         Optional<Post> resultOptional = Optional.empty();
         if (car != null) {
             resultOptional = crudRepository.optional(
-                    "SELECT DISTINCT p "
-                            + "FROM Post p "
-                            + "LEFT JOIN FETCH p.user pu "
-                            + "LEFT JOIN FETCH p.car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "LEFT JOIN FETCH p.prices pprices "
-                            + "LEFT JOIN FETCH p.photos pphotos "
-                            + "LEFT JOIN FETCH p.participates pparticipates "
+                    BODY_OF_HQL_QUERY
                             + "WHERE p.car = :car",
                     Post.class,
                     Map.of("car", car));
@@ -124,18 +90,7 @@ public class HbnPostRepository implements PostRepository {
         List<Post> resultList = new ArrayList<>();
         if (user != null) {
             resultList = crudRepository.query(
-                    "SELECT DISTINCT p "
-                            + "FROM Post p "
-                            + "LEFT JOIN FETCH p.user pu "
-                            + "LEFT JOIN FETCH p.car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "LEFT JOIN FETCH p.prices pprices "
-                            + "LEFT JOIN FETCH p.photos pphotos "
-                            + "LEFT JOIN FETCH p.participates pparticipates "
+                    BODY_OF_HQL_QUERY
                             + "WHERE p.user = :user",
                     Post.class,
                     Map.of("user", user));
@@ -147,18 +102,7 @@ public class HbnPostRepository implements PostRepository {
     public List<Post> showAllForLastDay() {
         LocalDateTime since = LocalDateTime.now(ZoneId.of("UTC")).minusDays(1);
             return crudRepository.query(
-                    "SELECT DISTINCT p "
-                            + "FROM Post p "
-                            + "LEFT JOIN FETCH p.user pu "
-                            + "LEFT JOIN FETCH p.car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "LEFT JOIN FETCH p.prices pprices "
-                            + "LEFT JOIN FETCH p.photos pphotos "
-                            + "LEFT JOIN FETCH p.participates pparticipates "
+                    BODY_OF_HQL_QUERY
                             + "WHERE p.created >= :since",
                     Post.class,
                     Map.of("since", since));
@@ -167,18 +111,7 @@ public class HbnPostRepository implements PostRepository {
     @Override
     public List<Post> showAllWhereArePhoto() {
         return crudRepository.query(
-                "SELECT DISTINCT p "
-                        + "FROM Post p "
-                        + "LEFT JOIN FETCH p.user pu "
-                        + "LEFT JOIN FETCH p.car c "
-                        + "LEFT JOIN FETCH c.engine e "
-                        + "LEFT JOIN FETCH c.owner o "
-                        + "LEFT JOIN FETCH o.user u "
-                        + "LEFT JOIN FETCH c.owners ho "
-                        + "LEFT JOIN FETCH ho.user hu "
-                        + "LEFT JOIN FETCH p.prices pprices "
-                        + "LEFT JOIN FETCH p.photos pphotos "
-                        + "LEFT JOIN FETCH p.participates pparticipates "
+                BODY_OF_HQL_QUERY
                         + "WHERE EXISTS (SELECT 1 FROM Photo ph where ph.post = p)",
                 Post.class);
     }
@@ -188,18 +121,7 @@ public class HbnPostRepository implements PostRepository {
         List<Post> resultList = new ArrayList<>();
         if (name != null &&  !name.trim().isEmpty()) {
             resultList = crudRepository.query(
-                    "SELECT DISTINCT p "
-                            + "FROM Post p "
-                            + "LEFT JOIN FETCH p.user pu "
-                            + "LEFT JOIN FETCH p.car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "LEFT JOIN FETCH p.prices pprices "
-                            + "LEFT JOIN FETCH p.photos pphotos "
-                            + "LEFT JOIN FETCH p.participates pparticipates "
+                    BODY_OF_HQL_QUERY
                             + "WHERE c.name LIKE :name",
                     Post.class,
                     Map.of("name", name));

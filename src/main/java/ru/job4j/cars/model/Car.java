@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "car")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "id")
+@EqualsAndHashCode(exclude = {"id", "owners"})
 public class Car {
 
     @Id
