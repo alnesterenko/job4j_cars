@@ -42,9 +42,9 @@ class HbnPostRepositoryTest {
     private static Owner secondTestOwner = new Owner("secondTestOwner", secondTestUser);
     private static Owner thirdTestOwner = new Owner("thirdTestOwner", thirdTestUser);
 
-    private static Car firstTestCar = new Car("Автомобиль с ГТД", firstTestEngine, firstTestOwner);
-    private static Car secondTestCar = new Car("Автомобиль бэтмента", secondTestEngine, thirdTestOwner, Set.of(secondTestOwner, thirdTestOwner));
-    private static Car thirdTestCar = new Car("Эксперементальное авто", thirdTestEngine, thirdTestOwner);
+    private static Car firstTestCar = new Car("Автомобиль с ГТД", firstTestEngine);
+    private static Car secondTestCar = new Car("Автомобиль бэтмента", secondTestEngine, Set.of(secondTestOwner, thirdTestOwner));
+    private static Car thirdTestCar = new Car("Эксперементальное авто", thirdTestEngine);
 
     @BeforeAll
     public static void initRepository() {

@@ -5,7 +5,6 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.Car;
 import ru.job4j.cars.model.Engine;
-import ru.job4j.cars.model.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +18,17 @@ public class HbnCarRepository implements CarRepository {
 
     private final CrudRepository crudRepository;
 
+    private final static String BODY_OF_HQL_QUERY =
+            "SELECT DISTINCT c "
+                    + "FROM Car c "
+                    + "LEFT JOIN FETCH c.engine e "
+                    + "LEFT JOIN FETCH c.owners ho "
+                    + "LEFT JOIN FETCH ho.user hu ";
+
     @Override
     public List<Car> findAll() {
         return crudRepository.query(
-                "SELECT DISTINCT c "
-                        + "FROM Car c "
-                        + "LEFT JOIN FETCH c.engine e "
-                        + "LEFT JOIN FETCH c.owner o "
-                        + "LEFT JOIN FETCH o.user u "
-                        + "LEFT JOIN FETCH c.owners ho "
-                        + "LEFT JOIN FETCH ho.user hu "
+                BODY_OF_HQL_QUERY
                         + "ORDER BY c.id ASC", Car.class);
     }
 
@@ -37,13 +37,7 @@ public class HbnCarRepository implements CarRepository {
         Optional<Car> resultOptional = Optional.empty();
         if (id != null) {
             resultOptional = crudRepository.optional(
-                    "SELECT DISTINCT c "
-                            + "FROM Car AS c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
+                    BODY_OF_HQL_QUERY
                             + "WHERE c.id = :id",
                     Car.class,
                     Map.of("id", id));
@@ -56,13 +50,7 @@ public class HbnCarRepository implements CarRepository {
         List<Car> resultList = new ArrayList<>();
         if (name != null) {
             resultList = crudRepository.query(
-                    "SELECT DISTINCT c "
-                            + "FROM Car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
+                    BODY_OF_HQL_QUERY
                             + "WHERE c.name = :name",
                     Car.class,
                     Map.of("name", name));
@@ -75,35 +63,10 @@ public class HbnCarRepository implements CarRepository {
         List<Car> resultList = new ArrayList<>();
         if (engine != null) {
             resultList = crudRepository.query(
-                    "SELECT DISTINCT c "
-                            + "FROM Car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
+                    BODY_OF_HQL_QUERY
                             + "WHERE c.engine = :engine",
                     Car.class,
                     Map.of("engine", engine));
-        }
-        return resultList;
-    }
-
-    @Override
-    public List<Car> findAllByOwner(Owner owner) {
-        List<Car> resultList = new ArrayList<>();
-        if (owner != null) {
-            resultList = crudRepository.query(
-                    "SELECT DISTINCT c "
-                            + "FROM Car c "
-                            + "LEFT JOIN FETCH c.engine e "
-                            + "LEFT JOIN FETCH c.owner o "
-                            + "LEFT JOIN FETCH o.user u "
-                            + "LEFT JOIN FETCH c.owners ho "
-                            + "LEFT JOIN FETCH ho.user hu "
-                            + "WHERE c.owner = :owner",
-                    Car.class,
-                    Map.of("owner", owner));
         }
         return resultList;
     }

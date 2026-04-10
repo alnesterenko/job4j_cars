@@ -81,12 +81,10 @@ class HbnCarRepositoryTest {
     public void whenSaveThenGetSame() {
         Car carBeforeAdd1 = new Car(
                 "Автомобиль с ГТД", 
-                firstTestEngine, 
-                firstTestOwner);
+                firstTestEngine);
         Car carBeforeAdd2 = new Car(
                 "Автомобиль бэтмента", 
-                secondTestEngine, 
-                thirdTestOwner, 
+                secondTestEngine,
                 Set.of(secondTestOwner, thirdTestOwner));
         List<Car> listBeforeAdd = hbnCarRepository.findAll();
         Car carAfterAdd1 = hbnCarRepository.add(carBeforeAdd1);
@@ -105,8 +103,7 @@ class HbnCarRepositoryTest {
     public void whenSaveOneSameSeveralThenGetAll() {
         Car car = new Car(
                 "Автомобиль бэтмента", 
-                secondTestEngine, 
-                thirdTestOwner, 
+                secondTestEngine,
                 Set.of(secondTestOwner, thirdTestOwner));
         List<Car> listBeforeAdd = hbnCarRepository.findAll();
         Car carAfterAdd1 = hbnCarRepository.add(car);
@@ -126,13 +123,11 @@ class HbnCarRepositoryTest {
         Car carBeforeReplace = new Car(
                 "Автомобиль бэтмента",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car carAfterAdd1 = hbnCarRepository.add(carBeforeReplace);
         Car carAfterReplace1 = new Car(
                 "Теперь это автомобиль не бэтмента",
                 secondTestEngine,
-                firstTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner, firstTestOwner));
         boolean success = hbnCarRepository.replace(carAfterAdd1.getId(), carAfterReplace1);
         List<Car> listAfterReplace = hbnCarRepository.findAll();
@@ -149,7 +144,6 @@ class HbnCarRepositoryTest {
         Car car = new Car(
                 "Автомобиль бэтмента",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car carAfterAdd1 = hbnCarRepository.add(car);
         List<Car> listAfterAdd = hbnCarRepository.findAll();
@@ -165,7 +159,6 @@ class HbnCarRepositoryTest {
         Car car = new Car(
                 "Автомобиль бэтмента",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car carAfterAdd1 = hbnCarRepository.add(car);
         List<Car> listAfterAdd = hbnCarRepository.findAll();
@@ -182,12 +175,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Автомобиль бэтмента",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Автомобиль не бэтмента",
                 secondTestEngine,
-                firstTestOwner,
                 Set.of(secondTestOwner, firstTestOwner));
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
@@ -204,12 +195,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "findAllByName",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "findAllByName",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByName = hbnCarRepository.findAllByName(car1.getName());
@@ -224,12 +213,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByName = hbnCarRepository.findAllByName("noting");
@@ -241,12 +228,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByName = hbnCarRepository.findAllByName("");
@@ -259,12 +244,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         Optional<Car> optionalCar1 = hbnCarRepository.findById(car1.getId());
@@ -281,12 +264,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         Optional<Car> optionalCar = hbnCarRepository.findById(car2.getId() + 1);
@@ -299,12 +280,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Автомобиль бэтмента",
                 firstTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Автомобиль не бэтмента",
                 secondTestEngine,
-                firstTestOwner,
                 Set.of(secondTestOwner, firstTestOwner));
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
@@ -321,12 +300,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Автомобиль бэтмента",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Автомобиль не бэтмента",
-                secondTestEngine,
-                firstTestOwner);
+                secondTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByEngine = hbnCarRepository.findAllByEngine(car1.getEngine());
@@ -341,12 +318,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByEngine = hbnCarRepository.findAllByEngine(thirdTestEngine);
@@ -358,30 +333,26 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByEngine = hbnCarRepository.findAllByEngine(null);
         assertThat(carListFoundByEngine.size()).isZero();
     }
 
-    /* Тестируем findAllByOwner() */
+    /* Тестируем findAllByOwner() *//*
     @Test
     public void whenSaveTwoDifferentCarsThenGetAllByOwner() {
         Car car1 = new Car(
                 "Автомобиль бэтмента",
                 firstTestEngine,
-                firstTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Автомобиль не бэтмента",
                 secondTestEngine,
-                secondTestOwner,
                 Set.of(secondTestOwner, firstTestOwner));
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
@@ -398,12 +369,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Автомобиль бэтмента",
                 firstTestEngine,
-                firstTestOwner,
                 Set.of(secondTestOwner, firstTestOwner));
         Car car2 = new Car(
                 "Автомобиль не бэтмента",
-                secondTestEngine,
-                firstTestOwner);
+                secondTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByOwner = hbnCarRepository.findAllByOwner(car1.getOwner());
@@ -418,12 +387,10 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                secondTestOwner,
                 Set.of(secondTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByOwner = hbnCarRepository.findAllByOwner(thirdTestOwner);
@@ -435,16 +402,13 @@ class HbnCarRepositoryTest {
         Car car1 = new Car(
                 "Первый автомобиль",
                 secondTestEngine,
-                thirdTestOwner,
                 Set.of(secondTestOwner, thirdTestOwner));
         Car car2 = new Car(
                 "Второй автомобиль",
-                firstTestEngine,
-                firstTestOwner);
+                firstTestEngine);
         hbnCarRepository.add(car1);
         hbnCarRepository.add(car2);
         List<Car> carListFoundByOwner = hbnCarRepository.findAllByOwner(null);
         assertThat(carListFoundByOwner.size()).isZero();
-    }
-
+    }*/
 }

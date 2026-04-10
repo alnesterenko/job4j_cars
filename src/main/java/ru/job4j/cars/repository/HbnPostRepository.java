@@ -27,8 +27,6 @@ public class HbnPostRepository implements PostRepository {
                     + "LEFT JOIN FETCH p.user pu "
                     + "LEFT JOIN FETCH p.car c "
                     + "LEFT JOIN FETCH c.engine e "
-                    + "LEFT JOIN FETCH c.owner o "
-                    + "LEFT JOIN FETCH o.user u "
                     + "LEFT JOIN FETCH p.photos pphotos ";
 
     @Override

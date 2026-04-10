@@ -27,26 +27,20 @@ public class Car {
     @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK"))
     private Engine engine;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "OWNER_ID_FK"))
-    private Owner owner;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owners",
             joinColumns = {@JoinColumn(name = "car_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "owner_id", nullable = false, updatable = false)})
     private Set<Owner> owners = new HashSet<>();
 
-    public Car(String name, Engine engine, Owner owner) {
+    public Car(String name, Engine engine) {
         this.name = name;
         this.engine = engine;
-        this.owner = owner;
     }
 
-    public Car(String name, Engine engine, Owner owner, Set<Owner> owners) {
+    public Car(String name, Engine engine, Set<Owner> owners) {
         this.name = name;
         this.engine = engine;
-        this.owner = owner;
         this.owners = owners;
     }
 }

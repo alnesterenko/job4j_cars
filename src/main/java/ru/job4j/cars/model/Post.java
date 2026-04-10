@@ -33,11 +33,11 @@ public class Post {
     @JoinColumn(name = "auto_user_id")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
     private Car car;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<PriceHistory> prices = new ArrayList<>();
 
@@ -59,6 +59,7 @@ public class Post {
                 + ", description=" + description
                 + ", created=" + created.format(FORMATTER)
                 + ", user=" + user
+                + ", car=" + car
                 + ", prices=" + prices
                 + ", photos=" + photos
                 + ", participates=" + participates
@@ -83,7 +84,10 @@ public class Post {
         this.user = user;
         this.car = car;
         this.prices = prices;
-        this.photos = photos;
+        this.photos = photos != null ? new HashSet<>(photos) : new HashSet<>();
+        for (Photo photo : this.photos) {
+            photo.setPost(this);
+        }
     }
 
     public Post(String description, User user, Car car, List<PriceHistory> prices, Set<Photo> photos, Set<User> participates) {
@@ -91,7 +95,10 @@ public class Post {
         this.user = user;
         this.car = car;
         this.prices = prices;
-        this.photos = photos;
+        this.photos = photos != null ? new HashSet<>(photos) : new HashSet<>();
+        for (Photo photo : this.photos) {
+            photo.setPost(this);
+        }
         this.participates = participates;
     }
 
@@ -104,5 +111,4 @@ public class Post {
             photo.setPost(this);
         }
     }
-
 }
