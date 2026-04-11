@@ -16,6 +16,8 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/* Так как тут не используются mock- или spy-объекты других репозиториев,
+ то эти тесты можно считать интеграционными, а не модульными */
 class HbnPostRepositoryTest {
 
     private static PostRepository hbnPostRepository;

@@ -13,6 +13,11 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
 
+        <!-- Для автоматической очистки БД после тестов -->
+        <!--<property name="hbm2ddl.auto">create-drop</property>--><!-- В данный момент не используется. С ней тесты рабатают медленнее -->
+        <!-- Не рекомендуется для продакшена, так как данные будут удаляться при остановке приложения. -->
+        <!-- При использовании данной настройки БД создаётся в начале тестов и удаляется по завершении ВСЕХ тестов -->
+
         <mapping class="ru.job4j.cars.model.User" />
         <mapping class="ru.job4j.cars.model.PriceHistory" />
         <mapping class="ru.job4j.cars.model.Post" />
