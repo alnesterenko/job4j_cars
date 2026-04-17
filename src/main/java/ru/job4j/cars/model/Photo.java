@@ -19,11 +19,14 @@ public class Photo {
 
     private String name;
 
+    private String path;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    public Photo(String name) {
+    public Photo(String name, String path) {
         this.name = name;
+        this.path = path;
     }
 }

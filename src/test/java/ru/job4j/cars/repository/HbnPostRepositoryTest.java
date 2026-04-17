@@ -121,7 +121,7 @@ class HbnPostRepositoryTest {
                 "Тестовое объявление, которое должно быть добавлено несколько раз",
                 firstTestUser,
                 firstTestCar,
-                Set.of(new Photo("firstTestSavePhoto")));
+                Set.of(new Photo("firstTestSavePhoto", "files/firstTestSavePhoto")));
         List<Post> listBeforeAdd = hbnPostRepository.findAll();
         Post postAfterAdd1 = hbnPostRepository.add(post);
         Exception exception = assertThrows(ConstraintViolationException.class, () -> {
@@ -142,13 +142,14 @@ class HbnPostRepositoryTest {
                 "Объявление до замены",
                 firstTestUser,
                 firstTestCar,
-                Set.of(new Photo("firstTestReplacePhoto")));
+                Set.of(new Photo("firstTestReplacePhoto", "files/firstTestReplacePhoto")));
         Post postAfterAdd1 = hbnPostRepository.add(postBeforeReplace);
         Post postAfterReplace1 = new Post(
                 "Объявление после замены",
                 secondTestUser,
                 secondTestCar,
-                Set.of(new Photo("secondTestReplacePhoto"), new Photo("thirdTestReplacePhoto")));
+                Set.of(new Photo("secondTestReplacePhoto", "files/secondTestReplacePhoto"),
+                        new Photo("thirdTestReplacePhoto", "files/thirdTestReplacePhoto")));
         boolean success = hbnPostRepository.replace(postAfterAdd1.getId(), postAfterReplace1);
         List<Post> listAfterReplace = hbnPostRepository.findAll();
         assertThat(success).isTrue();
@@ -165,7 +166,8 @@ class HbnPostRepositoryTest {
                 "Объявление, которое будет удалено",
                 secondTestUser,
                 thirdTestCar,
-                Set.of(new Photo("firstCorrectDeletePhoto"), new Photo("secondCorrectDeletePhoto")));
+                Set.of(new Photo("firstCorrectDeletePhoto", "files/firstCorrectDeletePhoto"),
+                        new Photo("secondCorrectDeletePhoto", "files/secondCorrectDeletePhoto")));
         Post postAfterAdd1 = hbnPostRepository.add(post);
         List<Post> listAfterAdd = hbnPostRepository.findAll();
         boolean success = hbnPostRepository.delete(postAfterAdd1.getId());
@@ -181,7 +183,8 @@ class HbnPostRepositoryTest {
                 "Объявление, которое не будет удалено",
                 secondTestUser,
                 thirdTestCar,
-                Set.of(new Photo("firstWrongDeletePhoto"), new Photo("secondWrongDeletePhoto")));
+                Set.of(new Photo("firstWrongDeletePhoto", "files/firstWrongDeletePhoto"),
+                        new Photo("secondWrongDeletePhoto", "files/secondWrongDeletePhoto")));
         Post postAfterAdd1 = hbnPostRepository.add(post);
         List<Post> listAfterAdd = hbnPostRepository.findAll();
         boolean success = hbnPostRepository.delete(postAfterAdd1.getId() + 31);
@@ -198,7 +201,8 @@ class HbnPostRepositoryTest {
                 "Первое объявление",
                 firstTestUser,
                 firstTestCar,
-                Set.of(new Photo("firstCorrectDeletePhoto"), new Photo("secondCorrectDeletePhoto")));
+                Set.of(new Photo("firstCorrectDeletePhoto", "files/firstCorrectDeletePhoto"),
+                        new Photo("secondCorrectDeletePhoto", "files/secondCorrectDeletePhoto")));
         Post post2 = new Post(
                 "Второе объявление",
                 secondTestUser,
@@ -219,7 +223,8 @@ class HbnPostRepositoryTest {
                 "Объявление, которое не будет найдено",
                 secondTestUser,
                 thirdTestCar,
-                Set.of(new Photo("firstWrongDeletePhoto"), new Photo("secondWrongDeletePhoto")));
+                Set.of(new Photo("firstWrongDeletePhoto", "files/firstWrongDeletePhoto"),
+                        new Photo("secondWrongDeletePhoto", "files/secondWrongDeletePhoto")));
         Post postAfterAdd1 = hbnPostRepository.add(post);
         var optionalPost = hbnPostRepository.findById(postAfterAdd1.getId() + 31);
         assertThat(optionalPost).isEmpty();
@@ -261,7 +266,8 @@ class HbnPostRepositoryTest {
                 "Объявление, которое не будет найдено",
                 secondTestUser,
                 thirdTestCar,
-                Set.of(new Photo("firstWrongDeletePhoto"), new Photo("secondWrongDeletePhoto")));
+                Set.of(new Photo("firstWrongDeletePhoto", "files/firstWrongDeletePhoto"),
+                        new Photo("secondWrongDeletePhoto", "files/secondWrongDeletePhoto")));
         hbnPostRepository.add(post);
         var findAllList = hbnPostRepository.findAll();
         var exactMatchList = hbnPostRepository.findAllByDescription("черепаха");
@@ -407,12 +413,13 @@ class HbnPostRepositoryTest {
                 "Объявление 1",
                 firstTestUser,
                 firstTestCar,
-                Set.of(new Photo("firstPhoto"), new Photo("secondPhoto")));
+                Set.of(new Photo("firstPhoto", "files/firstPhoto"),
+                        new Photo("secondPhoto", "files/secondPhoto")));
         Post post2 = new Post(
                 "Объявление 12",
                 secondTestUser,
                 secondTestCar,
-                Set.of(new Photo("thirdPhoto")));
+                Set.of(new Photo("thirdPhoto", "files/thirdPhoto")));
         Post post3 = new Post(
                 "Объявление 123",
                 secondTestUser,
@@ -445,7 +452,8 @@ class HbnPostRepositoryTest {
                 "Объявление 123",
                 secondTestUser,
                 thirdTestCar,
-                Set.of(new Photo("firstPhoto"), new Photo("secondPhoto")));
+                Set.of(new Photo("firstPhoto", "files/firstPhoto"),
+                        new Photo("secondPhoto", "files/secondPhoto")));
         hbnPostRepository.add(post3);
         var findAllList1 = hbnPostRepository.findAll();
         var whereArePhotoPostList1 = hbnPostRepository.showAllWhereArePhoto();
@@ -491,7 +499,8 @@ class HbnPostRepositoryTest {
                 "Объявление, которое не будет найдено",
                 secondTestUser,
                 thirdTestCar,
-                Set.of(new Photo("firstWrongDeletePhoto"), new Photo("secondWrongDeletePhoto")));
+                Set.of(new Photo("firstWrongDeletePhoto", "files/firstWrongDeletePhoto"),
+                        new Photo("secondWrongDeletePhoto", "files/secondWrongDeletePhoto")));
         hbnPostRepository.add(post);
         var findAllList = hbnPostRepository.findAll();
         var exactMatchList = hbnPostRepository.showAllByCarName("черепаха");

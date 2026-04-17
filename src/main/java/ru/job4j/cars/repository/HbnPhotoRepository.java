@@ -33,12 +33,6 @@ public class HbnPhotoRepository implements PhotoRepository {
     }
 
     @Override
-    public boolean replace(Integer id, Photo photo) {
-        return crudRepository.run("UPDATE Photo SET name = :name WHERE id = :id",
-                Map.of("id", id, "name", photo.getName())) > 0;
-    }
-
-    @Override
     public boolean delete(Integer id) {
         return crudRepository.run("DELETE Photo WHERE id = :id",
                 Map.of("id", id)) > 0;

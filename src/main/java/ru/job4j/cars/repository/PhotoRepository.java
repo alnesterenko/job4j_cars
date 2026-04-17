@@ -13,8 +13,6 @@ public interface PhotoRepository {
 
     Photo add(Photo photo);
 
-    boolean replace(Integer id, Photo photo);
-
     boolean delete(Integer id);
 
     void clearRepository();
